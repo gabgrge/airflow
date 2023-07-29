@@ -82,8 +82,8 @@ def transform_and_load_data():
     # Create a SQLAlchemy engine to connect to PostgreSQL
     engine = create_engine('postgresql://airflow:admin@localhost/airflow')
 
-    # Execute the table creation query and perform data transformation and calculate monthly statistics
     with engine.connect() as conn:
+        # Execute the table creation query and perform data transformation and calculate monthly statistics
         conn.execute("""
             CREATE TABLE IF NOT EXISTS monthly_restaurants_report (
                 restaurant_id TEXT,
@@ -94,8 +94,11 @@ def transform_and_load_data():
                 number_of_guests BIGINT,
                 amount FLOAT,
                 PRIMARY KEY (restaurant_id, month)
-            );
-            
+            )
+        """)
+
+        # Use INSERT ... ON CONFLICT to handle duplicate key violations
+        conn.execute("""
             INSERT INTO monthly_restaurants_report (restaurant_id, restaurant_name, country, month, number_of_bookings, number_of_guests, amount)
             SELECT
                 restaurant_id,
@@ -106,7 +109,12 @@ def transform_and_load_data():
                 SUM(guests) AS number_of_guests,
                 SUM(amount_euro) AS amount
             FROM preprocessed_table
-            GROUP BY restaurant_id, restaurant_name, country, month;
+            GROUP BY restaurant_id, restaurant_name, country, month
+            ON CONFLICT (restaurant_id, month)
+            DO UPDATE SET
+                number_of_bookings = EXCLUDED.number_of_bookings,
+                number_of_guests = EXCLUDED.number_of_guests,
+                amount = EXCLUDED.amount
         """)
 
 

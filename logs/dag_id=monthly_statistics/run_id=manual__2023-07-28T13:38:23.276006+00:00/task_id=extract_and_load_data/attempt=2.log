@@ -1,0 +1,13 @@
+[2023-07-28T16:07:10.967+0200] {taskinstance.py:1103} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: monthly_statistics.extract_and_load_data manual__2023-07-28T13:38:23.276006+00:00 [queued]>
+[2023-07-28T16:07:10.972+0200] {taskinstance.py:1103} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: monthly_statistics.extract_and_load_data manual__2023-07-28T13:38:23.276006+00:00 [queued]>
+[2023-07-28T16:07:10.972+0200] {taskinstance.py:1308} INFO - Starting attempt 2 of 2
+[2023-07-28T16:07:10.979+0200] {taskinstance.py:1327} INFO - Executing <Task(PythonOperator): extract_and_load_data> on 2023-07-28 13:38:23.276006+00:00
+[2023-07-28T16:07:10.982+0200] {standard_task_runner.py:57} INFO - Started process 27642 to run task
+[2023-07-28T16:07:10.985+0200] {standard_task_runner.py:84} INFO - Running: ['airflow', 'tasks', 'run', 'monthly_statistics', 'extract_and_load_data', 'manual__2023-07-28T13:38:23.276006+00:00', '--job-id', '16', '--raw', '--subdir', 'DAGS_FOLDER/monthly_statistics.py', '--cfg-path', '/var/folders/s3/52f8ptfd1wg8m_7fvtgb9g0w0000gn/T/tmp14cug3it']
+[2023-07-28T16:07:10.986+0200] {standard_task_runner.py:85} INFO - Job 16: Subtask extract_and_load_data
+[2023-07-28T16:07:11.032+0200] {task_command.py:410} INFO - Running <TaskInstance: monthly_statistics.extract_and_load_data manual__2023-07-28T13:38:23.276006+00:00 [running]> on host gabriel-3.home
+[2023-07-28T16:07:11.178+0200] {taskinstance.py:1545} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='airflow' AIRFLOW_CTX_DAG_ID='monthly_statistics' AIRFLOW_CTX_TASK_ID='extract_and_load_data' AIRFLOW_CTX_EXECUTION_DATE='2023-07-28T13:38:23.276006+00:00' AIRFLOW_CTX_TRY_NUMBER='2' AIRFLOW_CTX_DAG_RUN_ID='manual__2023-07-28T13:38:23.276006+00:00'
+[2023-07-28T16:07:11.693+0200] {python.py:183} INFO - Done. Returned value was: None
+[2023-07-28T16:07:11.706+0200] {taskinstance.py:1345} INFO - Marking task as SUCCESS. dag_id=monthly_statistics, task_id=extract_and_load_data, execution_date=20230728T133823, start_date=20230728T140710, end_date=20230728T140711
+[2023-07-28T16:07:11.722+0200] {local_task_job_runner.py:225} INFO - Task exited with return code 0
+[2023-07-28T16:07:11.746+0200] {taskinstance.py:2653} INFO - 1 downstream tasks scheduled from follow-on schedule check

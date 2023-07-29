@@ -1,0 +1,36 @@
+[2023-07-28T16:32:52.170+0200] {taskinstance.py:1103} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: monthly_statistics.preprocess_and_load_data manual__2023-07-28T14:32:48.726656+00:00 [queued]>
+[2023-07-28T16:32:52.175+0200] {taskinstance.py:1103} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: monthly_statistics.preprocess_and_load_data manual__2023-07-28T14:32:48.726656+00:00 [queued]>
+[2023-07-28T16:32:52.175+0200] {taskinstance.py:1308} INFO - Starting attempt 1 of 1
+[2023-07-28T16:32:52.183+0200] {taskinstance.py:1327} INFO - Executing <Task(PythonOperator): preprocess_and_load_data> on 2023-07-28 14:32:48.726656+00:00
+[2023-07-28T16:32:52.186+0200] {standard_task_runner.py:57} INFO - Started process 29995 to run task
+[2023-07-28T16:32:52.189+0200] {standard_task_runner.py:84} INFO - Running: ['airflow', 'tasks', 'run', 'monthly_statistics', 'preprocess_and_load_data', 'manual__2023-07-28T14:32:48.726656+00:00', '--job-id', '27', '--raw', '--subdir', 'DAGS_FOLDER/monthly_statistics.py', '--cfg-path', '/var/folders/s3/52f8ptfd1wg8m_7fvtgb9g0w0000gn/T/tmppsc0lu5p']
+[2023-07-28T16:32:52.190+0200] {standard_task_runner.py:85} INFO - Job 27: Subtask preprocess_and_load_data
+[2023-07-28T16:32:52.241+0200] {task_command.py:410} INFO - Running <TaskInstance: monthly_statistics.preprocess_and_load_data manual__2023-07-28T14:32:48.726656+00:00 [running]> on host gabriel.home
+[2023-07-28T16:32:52.314+0200] {taskinstance.py:1545} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='airflow' AIRFLOW_CTX_DAG_ID='monthly_statistics' AIRFLOW_CTX_TASK_ID='preprocess_and_load_data' AIRFLOW_CTX_EXECUTION_DATE='2023-07-28T14:32:48.726656+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2023-07-28T14:32:48.726656+00:00'
+[2023-07-28T16:32:52.442+0200] {taskinstance.py:1824} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/opt/homebrew/lib/python3.10/site-packages/airflow/operators/python.py", line 181, in execute
+    return_value = self.execute_callable()
+  File "/opt/homebrew/lib/python3.10/site-packages/airflow/operators/python.py", line 198, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+  File "/Users/gabriel-macbook/airflow/dags/monthly_statistics.py", line 48, in preprocess_and_load_data
+    df['date'] = pd.to_datetime(df['date'], format='%d/%m/%y')
+  File "/opt/homebrew/lib/python3.10/site-packages/pandas/core/tools/datetimes.py", line 1050, in to_datetime
+    values = convert_listlike(arg._values, format)
+  File "/opt/homebrew/lib/python3.10/site-packages/pandas/core/tools/datetimes.py", line 453, in _convert_listlike_datetimes
+    return _array_strptime_with_fallback(arg, name, utc, format, exact, errors)
+  File "/opt/homebrew/lib/python3.10/site-packages/pandas/core/tools/datetimes.py", line 484, in _array_strptime_with_fallback
+    result, timezones = array_strptime(arg, fmt, exact=exact, errors=errors, utc=utc)
+  File "pandas/_libs/tslibs/strptime.pyx", line 530, in pandas._libs.tslibs.strptime.array_strptime
+  File "pandas/_libs/tslibs/strptime.pyx", line 355, in pandas._libs.tslibs.strptime.array_strptime
+ValueError: unconverted data remains when parsing with format "%d/%m/%y": "17", at position 0. You might want to try:
+    - passing `format` if your strings have a consistent format;
+    - passing `format='ISO8601'` if your strings are all ISO8601 but not necessarily in exactly the same format;
+    - passing `format='mixed'`, and the format will be inferred for each element individually. You might want to use `dayfirst` alongside this.
+[2023-07-28T16:32:52.454+0200] {taskinstance.py:1345} INFO - Marking task as FAILED. dag_id=monthly_statistics, task_id=preprocess_and_load_data, execution_date=20230728T143248, start_date=20230728T143252, end_date=20230728T143252
+[2023-07-28T16:32:52.461+0200] {standard_task_runner.py:104} ERROR - Failed to execute job 27 for task preprocess_and_load_data (unconverted data remains when parsing with format "%d/%m/%y": "17", at position 0. You might want to try:
+    - passing `format` if your strings have a consistent format;
+    - passing `format='ISO8601'` if your strings are all ISO8601 but not necessarily in exactly the same format;
+    - passing `format='mixed'`, and the format will be inferred for each element individually. You might want to use `dayfirst` alongside this.; 29995)
+[2023-07-28T16:32:52.501+0200] {local_task_job_runner.py:225} INFO - Task exited with return code 1
+[2023-07-28T16:32:52.520+0200] {taskinstance.py:2653} INFO - 0 downstream tasks scheduled from follow-on schedule check

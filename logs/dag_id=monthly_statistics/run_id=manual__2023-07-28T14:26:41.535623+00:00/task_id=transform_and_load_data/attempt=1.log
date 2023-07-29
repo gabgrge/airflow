@@ -1,0 +1,107 @@
+[2023-07-28T16:26:47.976+0200] {taskinstance.py:1103} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: monthly_statistics.transform_and_load_data manual__2023-07-28T14:26:41.535623+00:00 [queued]>
+[2023-07-28T16:26:47.980+0200] {taskinstance.py:1103} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: monthly_statistics.transform_and_load_data manual__2023-07-28T14:26:41.535623+00:00 [queued]>
+[2023-07-28T16:26:47.980+0200] {taskinstance.py:1308} INFO - Starting attempt 1 of 1
+[2023-07-28T16:26:47.986+0200] {taskinstance.py:1327} INFO - Executing <Task(PythonOperator): transform_and_load_data> on 2023-07-28 14:26:41.535623+00:00
+[2023-07-28T16:26:47.989+0200] {standard_task_runner.py:57} INFO - Started process 29347 to run task
+[2023-07-28T16:26:47.991+0200] {standard_task_runner.py:84} INFO - Running: ['airflow', 'tasks', 'run', 'monthly_statistics', 'transform_and_load_data', 'manual__2023-07-28T14:26:41.535623+00:00', '--job-id', '25', '--raw', '--subdir', 'DAGS_FOLDER/monthly_statistics.py', '--cfg-path', '/var/folders/s3/52f8ptfd1wg8m_7fvtgb9g0w0000gn/T/tmpx9kdpoij']
+[2023-07-28T16:26:47.992+0200] {standard_task_runner.py:85} INFO - Job 25: Subtask transform_and_load_data
+[2023-07-28T16:26:48.040+0200] {task_command.py:410} INFO - Running <TaskInstance: monthly_statistics.transform_and_load_data manual__2023-07-28T14:26:41.535623+00:00 [running]> on host gabriel.home
+[2023-07-28T16:26:48.104+0200] {taskinstance.py:1545} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='airflow' AIRFLOW_CTX_DAG_ID='monthly_statistics' AIRFLOW_CTX_TASK_ID='transform_and_load_data' AIRFLOW_CTX_EXECUTION_DATE='2023-07-28T14:26:41.535623+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2023-07-28T14:26:41.535623+00:00'
+[2023-07-28T16:26:48.124+0200] {taskinstance.py:1824} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/opt/homebrew/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 1910, in _execute_context
+    self.dialect.do_execute(
+  File "/opt/homebrew/lib/python3.10/site-packages/sqlalchemy/engine/default.py", line 736, in do_execute
+    cursor.execute(statement, parameters)
+psycopg2.errors.UndefinedFunction: function date_trunc(unknown, text) does not exist
+LINE 18:                 DATE_TRUNC('month', date)::date AS month,
+                         ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/opt/homebrew/lib/python3.10/site-packages/airflow/operators/python.py", line 181, in execute
+    return_value = self.execute_callable()
+  File "/opt/homebrew/lib/python3.10/site-packages/airflow/operators/python.py", line 198, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+  File "/Users/gabriel-macbook/airflow/dags/monthly_statistics.py", line 83, in transform_and_load_data
+    conn.execute("""
+  File "/opt/homebrew/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 1370, in execute
+    return self._exec_driver_sql(
+  File "/opt/homebrew/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 1674, in _exec_driver_sql
+    ret = self._execute_context(
+  File "/opt/homebrew/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 1953, in _execute_context
+    self._handle_dbapi_exception(
+  File "/opt/homebrew/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 2134, in _handle_dbapi_exception
+    util.raise_(
+  File "/opt/homebrew/lib/python3.10/site-packages/sqlalchemy/util/compat.py", line 211, in raise_
+    raise exception
+  File "/opt/homebrew/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 1910, in _execute_context
+    self.dialect.do_execute(
+  File "/opt/homebrew/lib/python3.10/site-packages/sqlalchemy/engine/default.py", line 736, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedFunction) function date_trunc(unknown, text) does not exist
+LINE 18:                 DATE_TRUNC('month', date)::date AS month,
+                         ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+
+[SQL: 
+            CREATE TABLE IF NOT EXISTS monthly_restaurants_report (
+                restaurant_id TEXT,
+                restaurant_name TEXT,
+                country TEXT,
+                month TEXT,
+                number_of_bookings BIGINT,
+                number_of_guests BIGINT,
+                amount FLOAT,
+                PRIMARY KEY (restaurant_id, month)
+            );
+            
+            INSERT INTO monthly_restaurants_report (restaurant_id, restaurant_name, country, month, number_of_bookings, number_of_guests, amount)
+            SELECT
+                restaurant_id,
+                restaurant_name,
+                country,
+                DATE_TRUNC('month', date)::date AS month,
+                COUNT(*) AS number_of_bookings,
+                SUM(guests) AS number_of_guests,
+                SUM(amount_euro) AS amount
+            FROM preprocessed_table
+            GROUP BY restaurant_id, restaurant_name, country, month;
+        ]
+(Background on this error at: https://sqlalche.me/e/14/f405)
+[2023-07-28T16:26:48.136+0200] {taskinstance.py:1345} INFO - Marking task as FAILED. dag_id=monthly_statistics, task_id=transform_and_load_data, execution_date=20230728T142641, start_date=20230728T142647, end_date=20230728T142648
+[2023-07-28T16:26:48.143+0200] {standard_task_runner.py:104} ERROR - Failed to execute job 25 for task transform_and_load_data ((psycopg2.errors.UndefinedFunction) function date_trunc(unknown, text) does not exist
+LINE 18:                 DATE_TRUNC('month', date)::date AS month,
+                         ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+
+[SQL: 
+            CREATE TABLE IF NOT EXISTS monthly_restaurants_report (
+                restaurant_id TEXT,
+                restaurant_name TEXT,
+                country TEXT,
+                month TEXT,
+                number_of_bookings BIGINT,
+                number_of_guests BIGINT,
+                amount FLOAT,
+                PRIMARY KEY (restaurant_id, month)
+            );
+            
+            INSERT INTO monthly_restaurants_report (restaurant_id, restaurant_name, country, month, number_of_bookings, number_of_guests, amount)
+            SELECT
+                restaurant_id,
+                restaurant_name,
+                country,
+                DATE_TRUNC('month', date)::date AS month,
+                COUNT(*) AS number_of_bookings,
+                SUM(guests) AS number_of_guests,
+                SUM(amount_euro) AS amount
+            FROM preprocessed_table
+            GROUP BY restaurant_id, restaurant_name, country, month;
+        ]
+(Background on this error at: https://sqlalche.me/e/14/f405); 29347)
+[2023-07-28T16:26:48.180+0200] {local_task_job_runner.py:225} INFO - Task exited with return code 1
+[2023-07-28T16:26:48.196+0200] {taskinstance.py:2653} INFO - 0 downstream tasks scheduled from follow-on schedule check

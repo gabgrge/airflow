@@ -1,0 +1,54 @@
+[2023-07-28T14:19:52.692+0200] {taskinstance.py:1103} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: monthly_statistics.extract_data manual__2023-07-28T12:19:50.523309+00:00 [queued]>
+[2023-07-28T14:19:52.697+0200] {taskinstance.py:1103} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: monthly_statistics.extract_data manual__2023-07-28T12:19:50.523309+00:00 [queued]>
+[2023-07-28T14:19:52.697+0200] {taskinstance.py:1308} INFO - Starting attempt 1 of 1
+[2023-07-28T14:19:52.704+0200] {taskinstance.py:1327} INFO - Executing <Task(PythonOperator): extract_data> on 2023-07-28 12:19:50.523309+00:00
+[2023-07-28T14:19:52.709+0200] {standard_task_runner.py:57} INFO - Started process 16336 to run task
+[2023-07-28T14:19:52.712+0200] {standard_task_runner.py:84} INFO - Running: ['airflow', 'tasks', 'run', 'monthly_statistics', 'extract_data', 'manual__2023-07-28T12:19:50.523309+00:00', '--job-id', '4', '--raw', '--subdir', 'DAGS_FOLDER/monthly_statistics.py', '--cfg-path', '/var/folders/s3/52f8ptfd1wg8m_7fvtgb9g0w0000gn/T/tmplryx2zn_']
+[2023-07-28T14:19:52.712+0200] {standard_task_runner.py:85} INFO - Job 4: Subtask extract_data
+[2023-07-28T14:19:52.757+0200] {task_command.py:410} INFO - Running <TaskInstance: monthly_statistics.extract_data manual__2023-07-28T12:19:50.523309+00:00 [running]> on host gabriel-3.home
+[2023-07-28T14:19:52.817+0200] {taskinstance.py:1545} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='airflow' AIRFLOW_CTX_DAG_ID='monthly_statistics' AIRFLOW_CTX_TASK_ID='extract_data' AIRFLOW_CTX_EXECUTION_DATE='2023-07-28T12:19:50.523309+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2023-07-28T12:19:50.523309+00:00'
+[2023-07-28T14:19:52.862+0200] {python.py:183} INFO - Done. Returned value was:                                  booking_id                         restaurant_id         restaurant_name  ... guests        date         country
+0      dc850fb2-5e7c-47bf-9714-35caadfc9a35  81b15746-2dcb-4b3b-92ac-49cf8865e26b              Guerciotti  ...      9  11/01/2017          Italia
+1      057dc1c7-5e27-41a0-b14b-d3e17cee79c0  47bce3e7-ff17-4d66-8aa8-44afdfbc6eac  Adixen Vacuum Products  ...      4  10-08-2016          France
+2      42824289-4511-4180-b2b1-087b5b72f720  af869ab5-ab57-4c50-8456-a74341edc070     Taylor Wimpey (TW.)  ...      8  29/01/2015  United Kingdom
+3      0f990c62-8144-4fec-bcdd-3fa50883ffff  f39eb8a8-0596-4de6-952a-900278f98f44     Fid.euro.val. (FEV)  ...      3  10/11/2013  United Kingdom
+4      ea06d7bb-4b88-4cf2-b110-41ef7b24cb0d  d923c631-07d9-4614-b2a0-dee85f09e45d    Big Yellow Grp (BYG)  ...      3  02/11/2013  United Kingdom
+...                                     ...                                   ...                     ...  ...    ...         ...             ...
+19657  750d6b66-4bc1-4f93-b3f6-c144ceeab977  f39eb8a8-0596-4de6-952a-900278f98f44     Fid.euro.val. (FEV)  ...      5  06/03/2018  United Kingdom
+19658  92263b28-0d64-4fab-ab81-4a28955382e3  2956247b-9326-4375-a264-facbc175711a              NH Hoteles  ...     12  30/04/2017          España
+19659  714ef707-1242-4b5b-9765-2a83fa801bb9  2ebde70c-7ee6-470f-97d7-5cce070e2489    Domino's Pizza (DOM)  ...      3  20/01/2019  United Kingdom
+19660  ec458e46-04af-4f62-8009-4d2776230b24  7d89e8f3-0717-48bf-b8e9-d6d929b96006                Olivetti  ...     11  21/10/2001          Italia
+19661  a667220a-43b3-4493-a3a2-ccdc8c8471c7  884b8302-2d70-4a47-a105-4fdbf6509bf5                 Correos  ...      3  14/08/2019          España
+
+[19662 rows x 9 columns]
+[2023-07-28T14:19:52.882+0200] {taskinstance.py:1824} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/opt/homebrew/lib/python3.10/site-packages/airflow/utils/session.py", line 73, in wrapper
+    return func(*args, **kwargs)
+  File "/opt/homebrew/lib/python3.10/site-packages/airflow/models/taskinstance.py", line 2354, in xcom_push
+    XCom.set(
+  File "/opt/homebrew/lib/python3.10/site-packages/airflow/utils/session.py", line 73, in wrapper
+    return func(*args, **kwargs)
+  File "/opt/homebrew/lib/python3.10/site-packages/airflow/models/xcom.py", line 237, in set
+    value = cls.serialize_value(
+  File "/opt/homebrew/lib/python3.10/site-packages/airflow/models/xcom.py", line 632, in serialize_value
+    return json.dumps(value, cls=XComEncoder).encode("UTF-8")
+  File "/opt/homebrew/Cellar/python@3.10/3.10.12_1/Frameworks/Python.framework/Versions/3.10/lib/python3.10/json/__init__.py", line 238, in dumps
+    **kw).encode(obj)
+  File "/opt/homebrew/lib/python3.10/site-packages/airflow/utils/json.py", line 104, in encode
+    return super().encode(o)
+  File "/opt/homebrew/Cellar/python@3.10/3.10.12_1/Frameworks/Python.framework/Versions/3.10/lib/python3.10/json/encoder.py", line 199, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "/opt/homebrew/Cellar/python@3.10/3.10.12_1/Frameworks/Python.framework/Versions/3.10/lib/python3.10/json/encoder.py", line 257, in iterencode
+    return _iterencode(o, 0)
+  File "/opt/homebrew/lib/python3.10/site-packages/airflow/utils/json.py", line 91, in default
+    return serialize(o)
+  File "/opt/homebrew/lib/python3.10/site-packages/airflow/serialization/serde.py", line 143, in serialize
+    data, classname, version, is_serialized = _serializers[qn].serialize(o)
+  File "/opt/homebrew/lib/python3.10/site-packages/airflow/serialization/serializers/pandas.py", line 39, in serialize
+    import pyarrow as pa
+ModuleNotFoundError: No module named 'pyarrow'
+[2023-07-28T14:19:52.893+0200] {taskinstance.py:1345} INFO - Marking task as FAILED. dag_id=monthly_statistics, task_id=extract_data, execution_date=20230728T121950, start_date=20230728T121952, end_date=20230728T121952
+[2023-07-28T14:19:52.902+0200] {standard_task_runner.py:104} ERROR - Failed to execute job 4 for task extract_data (No module named 'pyarrow'; 16336)
+[2023-07-28T14:19:52.932+0200] {local_task_job_runner.py:225} INFO - Task exited with return code 1
+[2023-07-28T14:19:52.952+0200] {taskinstance.py:2653} INFO - 0 downstream tasks scheduled from follow-on schedule check

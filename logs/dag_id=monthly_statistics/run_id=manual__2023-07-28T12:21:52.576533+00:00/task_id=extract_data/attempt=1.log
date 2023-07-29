@@ -1,0 +1,26 @@
+[2023-07-28T14:21:53.928+0200] {taskinstance.py:1103} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: monthly_statistics.extract_data manual__2023-07-28T12:21:52.576533+00:00 [queued]>
+[2023-07-28T14:21:53.933+0200] {taskinstance.py:1103} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: monthly_statistics.extract_data manual__2023-07-28T12:21:52.576533+00:00 [queued]>
+[2023-07-28T14:21:53.933+0200] {taskinstance.py:1308} INFO - Starting attempt 1 of 1
+[2023-07-28T14:21:53.939+0200] {taskinstance.py:1327} INFO - Executing <Task(PythonOperator): extract_data> on 2023-07-28 12:21:52.576533+00:00
+[2023-07-28T14:21:53.942+0200] {standard_task_runner.py:57} INFO - Started process 16610 to run task
+[2023-07-28T14:21:53.945+0200] {standard_task_runner.py:84} INFO - Running: ['airflow', 'tasks', 'run', 'monthly_statistics', 'extract_data', 'manual__2023-07-28T12:21:52.576533+00:00', '--job-id', '5', '--raw', '--subdir', 'DAGS_FOLDER/monthly_statistics.py', '--cfg-path', '/var/folders/s3/52f8ptfd1wg8m_7fvtgb9g0w0000gn/T/tmpzeer7ujj']
+[2023-07-28T14:21:53.946+0200] {standard_task_runner.py:85} INFO - Job 5: Subtask extract_data
+[2023-07-28T14:21:53.993+0200] {task_command.py:410} INFO - Running <TaskInstance: monthly_statistics.extract_data manual__2023-07-28T12:21:52.576533+00:00 [running]> on host gabriel-3.home
+[2023-07-28T14:21:54.065+0200] {taskinstance.py:1545} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='airflow' AIRFLOW_CTX_DAG_ID='monthly_statistics' AIRFLOW_CTX_TASK_ID='extract_data' AIRFLOW_CTX_EXECUTION_DATE='2023-07-28T12:21:52.576533+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2023-07-28T12:21:52.576533+00:00'
+[2023-07-28T14:21:54.112+0200] {python.py:183} INFO - Done. Returned value was:                                  booking_id                         restaurant_id         restaurant_name  ... guests        date         country
+0      dc850fb2-5e7c-47bf-9714-35caadfc9a35  81b15746-2dcb-4b3b-92ac-49cf8865e26b              Guerciotti  ...      9  11/01/2017          Italia
+1      057dc1c7-5e27-41a0-b14b-d3e17cee79c0  47bce3e7-ff17-4d66-8aa8-44afdfbc6eac  Adixen Vacuum Products  ...      4  10-08-2016          France
+2      42824289-4511-4180-b2b1-087b5b72f720  af869ab5-ab57-4c50-8456-a74341edc070     Taylor Wimpey (TW.)  ...      8  29/01/2015  United Kingdom
+3      0f990c62-8144-4fec-bcdd-3fa50883ffff  f39eb8a8-0596-4de6-952a-900278f98f44     Fid.euro.val. (FEV)  ...      3  10/11/2013  United Kingdom
+4      ea06d7bb-4b88-4cf2-b110-41ef7b24cb0d  d923c631-07d9-4614-b2a0-dee85f09e45d    Big Yellow Grp (BYG)  ...      3  02/11/2013  United Kingdom
+...                                     ...                                   ...                     ...  ...    ...         ...             ...
+19657  750d6b66-4bc1-4f93-b3f6-c144ceeab977  f39eb8a8-0596-4de6-952a-900278f98f44     Fid.euro.val. (FEV)  ...      5  06/03/2018  United Kingdom
+19658  92263b28-0d64-4fab-ab81-4a28955382e3  2956247b-9326-4375-a264-facbc175711a              NH Hoteles  ...     12  30/04/2017          España
+19659  714ef707-1242-4b5b-9765-2a83fa801bb9  2ebde70c-7ee6-470f-97d7-5cce070e2489    Domino's Pizza (DOM)  ...      3  20/01/2019  United Kingdom
+19660  ec458e46-04af-4f62-8009-4d2776230b24  7d89e8f3-0717-48bf-b8e9-d6d929b96006                Olivetti  ...     11  21/10/2001          Italia
+19661  a667220a-43b3-4493-a3a2-ccdc8c8471c7  884b8302-2d70-4a47-a105-4fdbf6509bf5                 Correos  ...      3  14/08/2019          España
+
+[19662 rows x 9 columns]
+[2023-07-28T14:21:54.435+0200] {taskinstance.py:1345} INFO - Marking task as SUCCESS. dag_id=monthly_statistics, task_id=extract_data, execution_date=20230728T122152, start_date=20230728T122153, end_date=20230728T122154
+[2023-07-28T14:21:54.464+0200] {local_task_job_runner.py:225} INFO - Task exited with return code 0
+[2023-07-28T14:21:54.484+0200] {taskinstance.py:2653} INFO - 1 downstream tasks scheduled from follow-on schedule check
